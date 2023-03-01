@@ -1,21 +1,16 @@
 #!/usr/bin/env python3
 import sys
-current_date = None
-current_type = None
-current_count = 0
+import collections
 
+# Shuffling part
+d = collections.defaultdict(int)
 for line in sys.stdin:
     date, soc_med_type, count = line.strip().split('\t')
-    count = int(count)
+    key = (date, soc_med_type)
+    val = int(count)
 
-    if date == current_date and soc_med_type == current_type:
-        current_count += count
-    else:
-        if current_date and current_type:
-            print(f'{current_date},{current_type},{current_count}')
-        current_date = date
-        current_type = soc_med_type
-        current_count = count
+    d[key] += val
 
-if current_date and current_type:
-    print(f'{current_date},{current_type},{current_count}')
+# Sorting part
+for k, v in sorted(d.items()):
+    print(f'{k[0]},{k[1]},{v}')
