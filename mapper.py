@@ -42,6 +42,6 @@ for line in sys.stdin:
             else:
                 created_time = parser.parse(created_time, yearfirst=True)
             if(created_time and resource):
-                print(f'{created_time.date()}\t{resource}\t1')
+                print(f'{created_time.date()},{resource},1')
     except:
         pass

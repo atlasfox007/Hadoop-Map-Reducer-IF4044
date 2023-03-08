@@ -5,7 +5,7 @@ import collections
 # Shuffling part
 d = collections.defaultdict(int)
 for line in sys.stdin:
-    date, soc_med_type, count = line.strip().split('\t')
+    date, soc_med_type, count = line.strip().split(',')
     key = (date, soc_med_type)
     val = int(count)
 

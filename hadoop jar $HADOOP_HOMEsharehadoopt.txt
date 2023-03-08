@@ -1,0 +1,39 @@
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar -input /input_test/* -output /output11 -mapper ./mapper.py -reducer ./reducer.py -file ./mapper.py -file ./reducer.py
+
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+-D stream.job.output.key.comparator.class=helper.DateComparatoris \
+-D stream.num.map.output.key.fields=2 \
+-file ./mapper.py \
+-file ./reducer.py \
+-file ./helper/DateSocMedPair.java \
+-file ./helper/DateComparator.java \
+-mapper ./mapper.py \
+-reducer ./reducer.py \
+-input /main_input_test/*.json \
+-output /output_try2
+
+
+1. Compiling to class, adding common hadoop (for utility and custom input) with it's core function hadoop-core :
+
+	javac -cp $HADOOP_HOME/share/hadoop/common/hadoop-common-3.2.2.jar:$HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar ./helper/*.java
+	javac -classpath $HADOOP_HOME/share/hadoop/common/hadoop-common-3.2.2.jar ./helper/*.java
+
+	(dipisahin titik dua)
+
+2. Jadiin JAR
+
+	jar -cvf MyMapRed.jar ./helper/*.class
+
+3. Pas nge passing ke Hadoop Streaming API pake JAR kita aja soalnya udah all in bosque
+
+
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+-D stream.job.output.key.comparator.class=helper.DateComparatoris \
+-D stream.num.map.output.key.fields=2 \
+-file ./MyMapRed.jar \
+-file ./mapper.py \
+-file ./reducer.py \
+-mapper ./mapper.py \
+-reducer ./reducer.py \
+-input /main_input_test/*.json \
+-output /output_try2

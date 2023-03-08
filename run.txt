@@ -1,1 +1,1 @@
-hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar -input /input/raw_json/* -output /output1 -mapper ./mapper.py -reducer ./reducer.py -file ./mapper.py -file ./reducer.py
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar -input /main_input/input/rawjsontest/* -output /output1 -mapper ./mapper.py -reducer ./reducer.py -file ./mapper.py -file ./reducer.py
